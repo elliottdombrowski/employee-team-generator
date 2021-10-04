@@ -25,6 +25,9 @@ test('checking employee constructor and getters', () => {
     emp.setEmail("bademail");
     expect(emp.getEmail()).not.toMatch("@");
     expect(emp.checkValidEmail()).toBe(false);
+
+    // TEST FOR ROLE
+    expect(emp.getRole()).toBe("Employee");
 });
 
 

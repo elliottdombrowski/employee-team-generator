@@ -28,4 +28,7 @@ test('checking for manager to return office number as num', () => {
 
     // TEST IF OFFICE NUMBER IS NUM
     expect(typeof intern.getSchool()).toBe("string");
+
+    // TEST FOR ROLE
+    expect(intern.getRole()).toBe("Intern");
 });
