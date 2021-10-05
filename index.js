@@ -11,6 +11,7 @@ const Html = require('./lib/HtmlGen');
 const inquirer = require('inquirer');
 const { throwStatement } = require('@babel/types');
 
+//DEFINES TEAM ARRAY AS EMPTY
 let team = [];
 
 //Fires off Manager prompts on init
@@ -27,7 +28,6 @@ function promptManager() {
                 name: "id",
                 message: "Enter Manager ID",
                 validate: confirmNum
-                // validate: (val) => {return typeof val === 'number'}
             },
             {
                 type: "input",
@@ -53,10 +53,12 @@ function promptManager() {
             },
         ],
     ).then(emp => {
+        //WHEN ALL PROMPTS ANSWERED, PUSH INPUT DATA TO TEAM
         team.push(new Manager(emp.name, emp.id, emp.email, emp.office));
         //team.push(mgr);
         console.log("info: " + JSON.stringify(emp));
 
+        //IF USER SELECTS TO ADD NEW ENGINEER OR INTERN, CALL RESPECTIVE FUNCTION
         if (emp.another === "Engineer") {
             promptEngineer();
         } else if (emp.another === "Intern") {
@@ -105,9 +107,10 @@ function promptEngineer() {
             },
         ],
     ).then(emp => {
+        //WHEN ALL PROMPTS ANSWERED, PUSH INPUT DATA TO TEAM 
         team.push(new Engineer(emp.name, emp.id, emp.email, emp.username));
-        console.log("info: " + JSON.stringify(emp));
 
+        //IF USER SELECTS TO ADD NEW ENGINEER OR INTERN, CALL RESPECTIVE FUNCTION
         if (emp.another === "Engineer") {
             promptEngineer();
         } else if (emp.another === "Intern") {
@@ -156,9 +159,10 @@ function promptIntern() {
             },
         ]
     ).then(emp => {
+        //WHEN ALL PROMPTS ANSWERED, PUSH INPUT DATA TO TEAM
         team.push(new Intern(emp.name, emp.id, emp.email, emp.school));
-        console.log("info: " + JSON.stringify(emp));
 
+        //IF USER SELECTS TO ADD NEW ENGINEER OR INTERN, CALL RESPECTIVE FUNCTION
         if (emp.another === "Engineer") {
             promptEngineer();
         } else if (emp.another === "Intern") {
@@ -170,27 +174,32 @@ function promptIntern() {
     })
 }
 
+//IF USER INPUT = "NO" WHEN ADDING ANOTHER TEAMMATE, CALL WRITEHTML TO GENERATE PAGE
 function writeHtml() {
-    console.log("Full team: " + JSON.stringify(team));
-
     fs.writeFile('team.html', Html.createHtml(team), function (err) {
         if (err) return console.log(err);
-        console.log('Generated HTML > team.html');
     });
 }
 
 // INPUT VALIDATION
+
+//CHECKS THAT "ID" / "OFFICE NUM" PROMPTS REJECT STRING INPUTS, ACCEPT NUM INPUTS
 const confirmNum = async (input) => {
+    //PARSES USER INPUT TO NUM, RETURNS TRUE IF NUM
     if (parseInt(input)) {
         return true;
     }
+    //ELSE, RETURNS PROMPT TO INPUT NUM
     return 'Please Input a Number.';
 };
 
+//CHECKS THAT EMAIL PROMPT REJECTS INPUT NOT INCLUDING "@" CHARACTER
 const confirmEmail = async (input) => {
+    //IF INPUT STRING INCLUDES "@" CHARACTER, RETURN TRUE
     if (input.includes("@")) {
         return true;
     }
+    //ELSE RETURN INVALID
     return 'Not a Valid Email.';
 }
     

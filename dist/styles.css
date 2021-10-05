@@ -2,3 +2,40 @@
     margin: 0;
     padding: 0;
 }
+
+/* STYLES FOR BODY */
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75px;
+    background: rgb(10, 9, 10);
+    color: white;
+}
+
+body {
+    background: rgb(21, 33, 46);
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* STYLING BOOTSTRAP CARDS */
+.card {
+    margin: 3%;
+}
+
+.card-title {
+    text-align: center;
+    font-size: 110%;
+}
+
+.card-header {
+    text-align: center;
+    font-size: 150%;
+    border: none;
+}

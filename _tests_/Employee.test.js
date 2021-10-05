@@ -6,6 +6,7 @@ const Employee = require("../lib/Employee");
 // TEST IF EMPLOYEE NAME IS STRING
 test('checking employee constructor and getters', () => {
 
+    //PROVIDE HARDCODED VARIABLES TO TEST FUNCTIONALITY
     let emp = new Employee("eli", 123, "eli@test.com");
 
     expect(emp).toBeInstanceOf(Employee);
@@ -16,12 +17,13 @@ test('checking employee constructor and getters', () => {
     expect(emp.getId()).toBe(123);
     expect(typeof emp.getId()).toBe("number");
 
-    // TEST IF EMPLOYEE EMAIL IS EMAIL???
+    // TEST IF EMPLOYEE EMAIL CONTAINS @ CHARACTER
     expect(emp.getEmail()).toBe("eli@test.com");
     expect(typeof emp.getEmail()).toBe("string");
     expect(emp.getEmail()).toMatch("@");
     expect(emp.checkValidEmail()).toBe(true);
 
+    // TEST IF EMAIL IS INVALID
     emp.setEmail("bademail");
     expect(emp.getEmail()).not.toMatch("@");
     expect(emp.checkValidEmail()).toBe(false);
