@@ -27,7 +27,7 @@ test('checking for manager to return office number as num', () => {
     expect(manager.checkValidEmail()).toBe(false);
 
     // TEST IF OFFICE NUMBER IS NUM
-    expect(typeof manager.getOfficeNum()).toBe("number");
+    expect(typeof manager.getOffice()).toBe("number");
 
     // TEST FOR ROLE
     expect(manager.getRole()).toBe("Manager");

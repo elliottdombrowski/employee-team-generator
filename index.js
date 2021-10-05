@@ -26,16 +26,20 @@ function promptManager() {
                 type: "input",
                 name: "id",
                 message: "Enter Manager ID",
+                validate: confirmNum
+                // validate: (val) => {return typeof val === 'number'}
             },
             {
                 type: "input",
                 name: "email",
                 message: "Enter Manager Email",
+                validate: confirmEmail
             },
             {
                 type: "input",
                 name: "office", 
                 message: "Enter Manager Office Number",
+                validate: confirmNum
             },
             {
                 type: "list",
@@ -48,15 +52,16 @@ function promptManager() {
                 ],
             },
         ],
-    ).then(mgr => {
-        team.push(mgr);
-        console.log("info: " + JSON.stringify(mgr));
+    ).then(emp => {
+        team.push(new Manager(emp.name, emp.id, emp.email, emp.office));
+        //team.push(mgr);
+        console.log("info: " + JSON.stringify(emp));
 
-        if (mgr.another === "Engineer") {
+        if (emp.another === "Engineer") {
             promptEngineer();
-        } else if (mgr.another === "Intern") {
+        } else if (emp.another === "Intern") {
             promptIntern();
-        } else if (mgr.another === "No") {
+        } else if (emp.another === "No") {
             writeHtml();
         }
 
@@ -75,15 +80,17 @@ function promptEngineer() {
                 type: "input",
                 name: "id",
                 message: "Enter Engineer ID",
+                validate: confirmNum
             },
             {
                 type: "input",
                 name: "email",
                 message: "Enter Engineer Email",
+                validate: confirmEmail
             },
             {
                 type: "input",
-                name: "office", 
+                name: "username", 
                 message: "Enter Engineer Github Username",
             },
             {
@@ -98,7 +105,7 @@ function promptEngineer() {
             },
         ],
     ).then(emp => {
-        team.push(emp);
+        team.push(new Engineer(emp.name, emp.id, emp.email, emp.username));
         console.log("info: " + JSON.stringify(emp));
 
         if (emp.another === "Engineer") {
@@ -124,15 +131,17 @@ function promptIntern() {
                 type: "input",
                 name: "id",
                 message: "Enter Intern ID",
+                validate: confirmNum
             },
             {
                 type: "input",
                 name: "email",
                 message: "Enter Intern Email",
+                validate: confirmEmail
             },
             {
                 type: "input",
-                name: "office", 
+                name: "school", 
                 message: "Enter Intern's School",
             },
             {
@@ -147,7 +156,7 @@ function promptIntern() {
             },
         ]
     ).then(emp => {
-        team.push(emp);
+        team.push(new Intern(emp.name, emp.id, emp.email, emp.school));
         console.log("info: " + JSON.stringify(emp));
 
         if (emp.another === "Engineer") {
@@ -164,10 +173,25 @@ function promptIntern() {
 function writeHtml() {
     console.log("Full team: " + JSON.stringify(team));
 
-    fs.writeFile('team.html', HtmlGen(createHtml(team)), function (err) {
+    fs.writeFile('team.html', Html.createHtml(team), function (err) {
         if (err) return console.log(err);
-        console.log('Hello World > helloworld.txt');
+        console.log('Generated HTML > team.html');
     });
+}
+
+// INPUT VALIDATION
+const confirmNum = async (input) => {
+    if (parseInt(input)) {
+        return true;
+    }
+    return 'Please Input a Number.';
+};
+
+const confirmEmail = async (input) => {
+    if (input.includes("@")) {
+        return true;
+    }
+    return 'Not a Valid Email.';
 }
     
 //Called on initialization

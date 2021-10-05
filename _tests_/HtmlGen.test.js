@@ -12,5 +12,5 @@ test('html string creation', () => {
         new Engineer('Tech Guy', 111, 'eng@test.com', 'techguy777')
     ]
 
-    expect(Html.createHtml(team)).toBe("hello world");
+    expect(typeof Html.createHtml(team)).toBe('string');
 });
