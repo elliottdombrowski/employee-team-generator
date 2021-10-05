@@ -7,6 +7,7 @@ const Employee = require('./lib/Employee');
 const Engineer = require('./lib/Engineer');
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
+const Html = require('./lib/HtmlGen');
 const inquirer = require('inquirer');
 const { throwStatement } = require('@babel/types');
 
@@ -37,12 +38,13 @@ function promptManager() {
                 message: "Enter Manager Office Number",
             },
             {
-                type: "input",
+                type: "list",
                 name: "another", 
-                message: "Add another team member?",
+                message: "Add another team member? ",
                 choices: [
-                    "engineer",
-                    "intern",
+                    "No",
+                    "Engineer",
+                    "Intern",
                 ],
             },
         ],
@@ -54,7 +56,7 @@ function promptManager() {
             promptEngineer();
         } else if (mgr.another === "Intern") {
             promptIntern();
-        } else {
+        } else if (mgr.another === "No") {
             writeHtml();
         }
 
@@ -85,13 +87,14 @@ function promptEngineer() {
                 message: "Enter Engineer Github Username",
             },
             {
-                type: "input",
+                type: "list",
                 name: "another", 
-                message: "Add another team member? (Engineer, Intern)",
-                // choices: [
-                //     "engineer",
-                //     "intern",
-                // ],
+                message: "Add another team member?",
+                choices: [
+                    "No",
+                    "Engineer",
+                    "Intern",
+                ],
             },
         ],
     ).then(emp => {
@@ -102,7 +105,7 @@ function promptEngineer() {
             promptEngineer();
         } else if (emp.another === "Intern") {
             promptIntern();
-        } else {
+        } else if (emp.another === "No") {
             writeHtml();
         }
 
@@ -137,9 +140,9 @@ function promptIntern() {
                 name: "another", 
                 message: "Add another team member?",
                 choices: [
-                    "no",
-                    "engineer",
-                    "intern",
+                    "No",
+                    "Engineer",
+                    "Intern",
                 ]
             },
         ]
@@ -151,7 +154,7 @@ function promptIntern() {
             promptEngineer();
         } else if (emp.another === "Intern") {
             promptIntern();
-        } else {
+        } else if (emp.another === "No") {
             writeHtml();
         }
 
@@ -160,12 +163,12 @@ function promptIntern() {
 
 function writeHtml() {
     console.log("Full team: " + JSON.stringify(team));
+
+    fs.writeFile('team.html', HtmlGen(createHtml(team)), function (err) {
+        if (err) return console.log(err);
+        console.log('Hello World > helloworld.txt');
+    });
 }
     
-    //Called on initialization
+//Called on initialization
 promptManager();
-    // {
-    //     type: "input",
-    //     name: "officenumber",
-    //     message: "Enter Manager Office Number",
-    // },
