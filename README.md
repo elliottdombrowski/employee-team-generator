@@ -28,5 +28,4 @@ WHEN I choose not to add another team member, my webpage will be generated.
 ---
 
 ### The video below will demonstrate the application's usage.
-
-https://drive.google.com/file/d/1NTGMx6RjmbNT1l5R1XOOiw6wfVZmytGs/view
+https://drive.google.com/file/d/1NTGMx6RjmbNT1l5R1XOOiw6wfVZmytGs/view?usp=sharing
